@@ -57,7 +57,6 @@
     box-sizing: border-box;
     background-color: #212A33;
     border-radius: 16px;
-    /*padding: 48px 40px;*/
   }
   .modal-base-plate {
     padding: 48px 40px 0;

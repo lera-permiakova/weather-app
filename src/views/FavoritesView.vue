@@ -10,18 +10,23 @@
       Selected cities
     </h3>
 
-    <city-weather-info v-for="city in favoriteCitiesWeather"
-                       :key="city.id"
-                       :city="city"
-                       :buttonStatus="false"
-                       :hourly-forecast-time="city.hourlyForecastTime"
-                       :hourly-forecast-temp="city.hourlyForecastTemp"
-    />
+    <template v-if="favoriteCitiesWeather.length">
+      <city-weather-info v-for="city in favoriteCitiesWeather"
+                         :key="city.id"
+                         :city="city"
+                         :buttonStatus="false"
+                         :hourly-forecast-time="city.hourlyForecastTime"
+                         :hourly-forecast-temp="city.hourlyForecastTemp"
+      />
+    </template>
+    <div v-else class="favorites-view-empty">
+      Here is nothing yet. Add cities from the main page!
+    </div>
+
   </div>
 </template>
 
 <script>
-/*eslint-disable*/
 import CityWeatherInfo from "@/components/CityWeatherInfo";
 import IconArrow from "@/icons/ArrowLeft";
 import {mapActions, mapGetters, mapMutations} from "vuex";
@@ -33,10 +38,12 @@ export default {
     IconArrow
   },
   mounted() {
-    this.changeSyncStatus(true)
-    Object.keys(localStorage).map(key => {
-      this.getCurrentWeather({...JSON.parse(localStorage.getItem(key)), type: 'saved'})
-    })
+    if (localStorage.length > 0) {
+      this.changeSyncStatus(true)
+      Object.keys(localStorage).map(key => {
+        this.getCurrentWeather({...JSON.parse(localStorage.getItem(key)), type: 'saved'})
+      })
+    }
   },
   computed: {
     ...mapGetters({
@@ -88,6 +95,11 @@ export default {
     top: 50%;
     left: -40px;
     transform: translateY(-50%);
+  }
+  .favorites-view-empty {
+    padding: 16px;
+    font-size: 18px;
+    text-align: center;
   }
 </style>
 

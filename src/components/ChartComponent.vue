@@ -5,7 +5,6 @@
 </template>
 
 <script>
-/*eslint-disable*/
 import Chart from 'chart.js/auto';
 
 export default {
@@ -32,7 +31,7 @@ export default {
     },
   },
   mounted() {
-    const myChart = new Chart(document.getElementById(`myChart${this.chartId}`), this.config);
+    return new Chart(document.getElementById(`myChart${this.chartId}`), this.config);
   },
   data() {
     return {

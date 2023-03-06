@@ -13,7 +13,6 @@ export default createStore({
   },
   mutations: {
     setNewCityInfo: (state, {cityInfo, type}) => {
-      console.log(cityInfo, 99999, type)
       const cities = type === 'new' ? state.citiesAdded : state.citiesSaved
       const index = cities.findIndex(city => city.id === cityInfo.id)
       if (index >= 0) {
@@ -46,13 +45,12 @@ export default createStore({
       }
     },
     async getCity({ dispatch }, { ip }) {
-      console.log(ip)
       try {
-        const res = await fetch(`http://api.sypexgeo.net/json/${ip}`)
+        const res = await fetch(`https://api.sypexgeo.net/json/${ip}`)
         const data = await res.json()
         dispatch('getCurrentWeather', {lat : data.region.lat, lon: data.region.lon})
       } catch(e) {
-        console.error(e)
+        return new Error(e)
       }
     },
     async getCurrentWeather({ dispatch }, {lat, lon, type = 'new'}) {
@@ -76,19 +74,16 @@ export default createStore({
             visibility: data.visibility
           }}
         dispatch('get5DaysForecast', {lat, lon, chosenCityWeather, type})
-        // console.log('getCurrentWeather', data)
       } catch(e) {
-        console.log(e)
+        return new Error(e)
       }
     },
     async get5DaysForecast({ commit }, {lat, lon, chosenCityWeather, type}) {
       try {
         const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=25afb82ea05f9bd1034e28e041035526&units=metric`)
         const data = await res.json()
-        // console.log(1111, data)
         const hourlyForecastTemp = data.list.slice(0, 9).reduce((acc, el) => [...acc, el.main.temp],[])
         const hourlyForecastTime = data.list.slice(0, 9).reduce((acc, el) => [...acc, el['dt_txt'].substr(11, 5)],[])
-        // console.log('hourlyForecastTemp:', hourlyForecastTemp, 'hourlyForecastTime:', hourlyForecastTime)
         const forecast = data.list.reduce((acc, el)=> {
           const key = el['dt_txt'].slice(0, 10)
           const average3HoursAmount = (el.main['temp_min'] + el.main['temp_max']) / 2
@@ -106,14 +101,13 @@ export default createStore({
             return acc
           }
         }, {})
-        console.log(forecast, 'forecast')
         commit('setNewCityInfo', {
         cityInfo: {...chosenCityWeather, forecast, hourlyForecastTemp, hourlyForecastTime},
           type,
       })
         commit('changeSyncStatus', false)
       } catch(e) {
-        console.log(e)
+        return new Error(e)
       }
     },
   },

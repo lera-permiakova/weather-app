@@ -39,7 +39,7 @@ const citiesAll = require('../../node_modules/cities.json/cities');
 
 
 export default {
-  name: 'FacadeInputSearch',
+  name: 'InputSearch',
   components: { IconClose, IconSearch },
   props: {
     model: {

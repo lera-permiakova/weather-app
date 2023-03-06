@@ -77,7 +77,6 @@
 </template>
 
 <script>
-/*eslint-disable*/
 import WeatherCard from '@/components/WeatherCard.vue'
 import ChartComponent from "@/components/ChartComponent";
 import ModalBase from "@/modals/Base.vue"
@@ -184,10 +183,8 @@ export default {
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    /*grid-template-columns: 100%;*/
     justify-content: space-around;
     align-items: center;
-    /*justify-content: space-between;*/
   }
   .city-weather-card-temp {
     padding-right: 38px;
@@ -212,7 +209,6 @@ export default {
     font-weight: 600;
     margin-bottom: 26px;
     color: #183651;
-    /*text-align: center;*/
   }
   .city-weather-card-body {
     display: grid;

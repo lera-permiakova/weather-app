@@ -1,24 +1,25 @@
 <template>
-  <div class="facade-navigation-tabs">
+  <div class="weather-card">
     <icon-close @click="modalStatus = true" v-if="buttonClose"/>
-    <div class="navigation-tabs-plate">
-      <div class="navigation-tabs-plate-header">
+    <div class="weather-card-plate">
+      <div class="weather-card-plate-header">
         <button v-for="(tab, tabIndex) in tabs"
                 :key="tabIndex"
-                class="daily-weather-card-tabs-button"
+                class="weather-card-tabs-button"
                 :class="{'tab-active': currentTab === tabIndex}"
                 @click="$emit('onTab', tabIndex)">
           {{tab}}
         </button>
       </div>
-      <div class="navigation-tabs-plate-title">
+
+      <div class="weather-card-plate-title">
         <icon-star :class="{'icon-favorite-active': favorite}" @click="$emit('onChoose')"/>
-        <h2 class="daily-weather-card-header-text">{{name}}, {{country}}</h2>
+        <h2 class="weather-card-header-text">{{name}}, {{country}}</h2>
       </div>
 
       <transition-group :name="tabTransitionName">
         <template v-for="(tab, tabIndex) in tabs">
-          <div class="navigation-tabs-content" :key="tabIndex" v-if="tabIndex === currentTab">
+          <div class="weather-card-content" :key="tabIndex" v-if="tabIndex === currentTab">
             <slot :name="`tab-content-${tabIndex}`"/>
           </div>
         </template>
@@ -79,13 +80,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .facade-navigation-tabs{
+  .weather-card{
     width: 100%;
     position: relative;
     max-width: 460px;
     margin-bottom: 10px;
   }
-  .navigation-tabs-plate {
+  .weather-card-plate {
     height: 340px;
     background-color: #c7d5e7;
     border-radius: 8px;
@@ -112,12 +113,12 @@ export default {
   .icon-close:active {
     transform: scale(.9);
   }
-  .navigation-tabs-plate-header {
+  .weather-card-plate-header {
     background-color: #4A5A6A;
     margin-bottom: 12px;
     border-radius: 8px 8px 0 0;
   }
-  .daily-weather-card-tabs-button {
+  .weather-card-tabs-button {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-weight: 600;
     font-size: 22px;
@@ -131,10 +132,10 @@ export default {
     border-radius: 8px 8px 0 0;
     transition: all .3s;
   }
-  .daily-weather-card-tabs-button.tab-active:first-child{
+  .weather-card-tabs-button.tab-active:first-child{
     border-radius: 8px 12px 0 0;
   }
-  .daily-weather-card-tabs-button.tab-active:last-child{
+  .weather-card-tabs-button.tab-active:last-child{
     border-radius: 12px 8px 0 0;
   }
   .tab-active {
@@ -143,14 +144,14 @@ export default {
     color: #183651;
     cursor: default;
   }
-  .navigation-tabs-plate-title {
+  .weather-card-plate-title {
     padding: 0 10px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     overflow: hidden;
   }
-  .daily-weather-card-header-text{
+  .weather-card-header-text{
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -170,7 +171,7 @@ export default {
     color: #dd4c07;
   }
 
-  .navigation-tabs-content {
+  .weather-card-content {
     width: 100%;
     height: 100%;
     overflow: hidden;

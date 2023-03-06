@@ -17,7 +17,7 @@
 </template>
 
 <script>
-/*eslint-disable*/
+
 import CityWeatherInfo from "@/components/CityWeatherInfo";
 import InputSearch from '@/components/InputSearch.vue'
 import {mapActions, mapGetters} from "vuex";
@@ -68,9 +68,6 @@ export default {
     left: -40px;
     transform: translateY(-50%);
   }
-  /*.main-view-cities-plate {*/
-  /*  margin: 0 auto;*/
-  /*}*/
   .new-city-enter-from, .new-city-leave-to {
     opacity: 0;
     transform: translateY(-10px);
